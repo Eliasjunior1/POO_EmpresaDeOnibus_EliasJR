@@ -144,7 +144,7 @@ public class Login {
 		
 		
 		JLabel lbl_model = new JLabel("");
-		lbl_model.setIcon(new ImageIcon("C:\\Users\\elias\\eclipse-workspace\\AviacaoBatista\\src\\images\\LOGIN.jpg"));
+		lbl_model.setIcon(new ImageIcon("src\\images\\LOGIN.jpg"));
 		lbl_model.setBounds(0, 0, 300, 400);
 		EmpresaDeOnibus.getContentPane().add(lbl_model);
 		
