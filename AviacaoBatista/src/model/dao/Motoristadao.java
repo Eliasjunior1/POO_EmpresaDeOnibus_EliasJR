@@ -22,11 +22,10 @@ public class Motoristadao {
 			stmt.setString(3, m.getCpf());
 			stmt.setInt(4, m.getIdade());
 			stmt.setString(5, m.getTelefone());
-			stmt.setFloat(6, m.getSalario());
+			stmt.setFloat(6, m.getSalario()); 
 			stmt.setString(7, m.getCargo());
 			stmt.setString(8, m.getCnh());
 
-			
 			stmt.executeUpdate();
 			
 			
@@ -54,6 +53,7 @@ public class Motoristadao {
 				
 				Motorista m = new Motorista(rs.getString("nome"), rs.getString("cpf"), rs.getInt("idade"), rs.getString("cnh"), rs.getString("telefone"), rs.getFloat("salario"), rs.getString("cargo"));
 				m.setId_motorista(rs.getString("id_motorista"));
+				m.reajuste_salario();
 				
 				TelaPrincipal.motorista_.add(m);
 			}
@@ -76,7 +76,7 @@ public class Motoristadao {
 			stmt.setString(3, m.getCpf());
 			stmt.setInt(4, m.getIdade());
 			stmt.setString(5, m.getTelefone());
-			stmt.setFloat(6, m.getSalario());
+			stmt.setDouble(6, m.getSalario());
 			stmt.setString(7, m.getCargo());
 			stmt.setString(8, m.getCnh());
 			

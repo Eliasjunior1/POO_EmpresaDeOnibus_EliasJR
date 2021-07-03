@@ -42,7 +42,7 @@ public class Onibusdao {
 		ResultSet rs = null;
 		
 		try {
-			stmt = con.prepareStatement("SELECT * FROM motorista");
+			stmt = con.prepareStatement("SELECT * FROM onibus");
 			rs = stmt.executeQuery();
 			
 			

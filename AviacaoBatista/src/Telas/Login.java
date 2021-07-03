@@ -17,6 +17,7 @@ import javax.swing.JTextField;
 
 import Persistentes.Gerente;
 import model.dao.Gerentedao;
+import java.awt.Toolkit;
 
 public class Login {
 	
@@ -50,6 +51,7 @@ public class Login {
 
 	private void initialize() {
 		EmpresaDeOnibus = new JFrame();
+		EmpresaDeOnibus.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\images\\journey_120px.png"));
 		EmpresaDeOnibus.setBounds(new Rectangle(0, 0, 300, 400));
 	
 		EmpresaDeOnibus.setBounds(100, 100, 300, 400);
@@ -57,7 +59,7 @@ public class Login {
 		EmpresaDeOnibus.getContentPane().setLayout(null);
 		EmpresaDeOnibus.setResizable(false);
 		EmpresaDeOnibus.setLocationRelativeTo(null);
-		EmpresaDeOnibus.setUndecorated(true);
+		EmpresaDeOnibus.setUndecorated(false);
 		
 		Gerentedao dao = new Gerentedao();
 		

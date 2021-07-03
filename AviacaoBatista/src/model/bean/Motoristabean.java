@@ -9,6 +9,7 @@ public class Motoristabean {
 	private float salario;
 	private String cargo;
 	private String cnh;
+	
 	public String getId_motorista() {
 		return id_motorista;
 	}

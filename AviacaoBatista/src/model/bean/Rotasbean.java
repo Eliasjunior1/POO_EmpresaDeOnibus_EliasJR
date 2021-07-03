@@ -1,10 +1,12 @@
 package model.bean;
 
 public class Rotasbean {
+	
 	private int id_rota;
 	private String origem;
 	private String destino;
 	private String onibus;
+	
 	public int getId_rota() {
 		return id_rota;
 	}

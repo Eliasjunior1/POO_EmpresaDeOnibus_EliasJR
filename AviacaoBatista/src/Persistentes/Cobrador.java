@@ -19,4 +19,8 @@ public class Cobrador extends Funcionarios{
 	public void setId_cobrador(String id_cobrador) {
 		this.id_cobrador = id_cobrador;
 	}
+	
+	public void reajuste_salario() {
+		this.salario = (float) (this.salario - 0.600);
+	}
 }

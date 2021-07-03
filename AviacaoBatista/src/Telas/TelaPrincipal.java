@@ -55,6 +55,7 @@ import javax.swing.AbstractListModel;
 import javax.swing.JSplitPane;
 import javax.swing.JLayeredPane;
 import javax.swing.JSeparator;
+import java.awt.Toolkit;
 
 public class TelaPrincipal {
 	
@@ -238,70 +239,130 @@ public class TelaPrincipal {
 		
 	}
 	
-	public void carregarTable() {
+	public void carregarTable(String tipo) {
 		
 		DefaultTableModel dtmFuncionarios = new DefaultTableModel();
-		dtmFuncionarios.addColumn("Nome");
-		dtmFuncionarios.addColumn("CPF");
-		dtmFuncionarios.addColumn("Idade");
-		dtmFuncionarios.addColumn("CNH");
-		dtmFuncionarios.addColumn("Telefone");
-		dtmFuncionarios.addColumn("Salário");
-		dtmFuncionarios.addColumn("Cargo");
-		dtmFuncionarios.addRow(new String[] {"Nome", "CPF", "Idade", "CNH", "Telefone", "Salário","Cargo"});
 		
-		Motoristadao dao = new Motoristadao();
-		dao.read();
-		Cobradordao daoo = new Cobradordao();
-		daoo.read();
-		Fiscaldao daooo = new Fiscaldao();
-		daooo.read();
-		
-		if(motorista_.isEmpty() == false) {
-			for(int i = 0; i < motorista_.size(); i++) {
+		if(tipo.equalsIgnoreCase("")) {
+			table.setModel(dtmFuncionarios);
+			
+		}else {
+			if(tipo.equalsIgnoreCase("Funcionarios")) {
 				
-				StringBuffer idade = new StringBuffer();
-				StringBuffer salario = new StringBuffer();
-				idade.append(motorista_.get(i).getIdade());
-				salario.append(motorista_.get(i).ajuste_salario());
-				String auxiliar = idade.toString();
-				String auxiliar2 = salario.toString();
-				dtmFuncionarios.addRow(new String[] {motorista_.get(i).getNome(), motorista_.get(i).getCpf(), auxiliar, motorista_.get(i).getCnh(), motorista_.get(i).getTelefone(), auxiliar2, motorista_.get(i).getCargo()});
+				dtmFuncionarios.addColumn("Nome");
+				dtmFuncionarios.addColumn("CPF");
+				dtmFuncionarios.addColumn("Idade");
+				dtmFuncionarios.addColumn("CNH");
+				dtmFuncionarios.addColumn("Telefone");
+				dtmFuncionarios.addColumn("Salário");
+				dtmFuncionarios.addColumn("Cargo");
+				dtmFuncionarios.addRow(new String[] {"Nome", "CPF", "Idade", "CNH", "Telefone", "Salário","Cargo"});
 				
+				
+				Motoristadao dao = new Motoristadao();
+				dao.read();
+				Cobradordao daoo = new Cobradordao();
+				daoo.read();
+				Fiscaldao daooo = new Fiscaldao();
+				daooo.read();
+				
+				if(motorista_.isEmpty() == false) {
+					for(int i = 0; i < motorista_.size(); i++) {
+						
+						StringBuffer idade = new StringBuffer();
+						StringBuffer salario = new StringBuffer();
+						
+						idade.append(motorista_.get(i).getIdade());
+						salario.append(motorista_.get(i).getSalario());
+						
+						
+						String auxiliar = idade.toString();
+						String auxiliar2 = salario.toString();
+						
+						dtmFuncionarios.addRow(new String[] {motorista_.get(i).getNome(), motorista_.get(i).getCpf(), auxiliar, motorista_.get(i).getCnh(), motorista_.get(i).getTelefone(), auxiliar2, motorista_.get(i).getCargo()});
+						
+					}
+					
+				}
+				
+				if(cobrador_.isEmpty() == false) {
+					
+					for(int i = 0; i < cobrador_.size(); i++) {
+						
+						StringBuffer idade = new StringBuffer();
+						StringBuffer salario = new StringBuffer();
+						idade.append(cobrador_.get(i).getIdade());
+						salario.append(cobrador_.get(i).ajuste_salario());
+						String auxiliar = idade.toString();
+						String auxiliar2 = salario.toString();
+						dtmFuncionarios.addRow(new String[] {cobrador_.get(i).getNome(), cobrador_.get(i).getCpf(), auxiliar, "S/CNH", cobrador_.get(i).getTelefone(), auxiliar2, cobrador_.get(i).getCargo()});
+						
+					}
+					
+				}
+				
+				if(fiscal_.isEmpty() == false) {
+					for(int i = 0; i < fiscal_.size(); i++) {
+						
+						StringBuffer idade = new StringBuffer();
+						StringBuffer salario = new StringBuffer();
+						idade.append(fiscal_.get(i).getIdade());
+						salario.append(fiscal_.get(i).ajuste_salario());
+						String auxiliar = idade.toString();
+						String auxiliar2 = salario.toString();
+						dtmFuncionarios.addRow(new String[] {fiscal_.get(i).getNome(), fiscal_.get(i).getCpf(), auxiliar, "S/CNH", fiscal_.get(i).getTelefone(), auxiliar2, fiscal_.get(i).getCargo()});
+						
+					}
+					
+				}
+				
+				table.setModel(dtmFuncionarios);
 			}
 			
-		}
-		
-		if(cobrador_.isEmpty() == false) {
-			for(int i = 0; i < cobrador_.size(); i++) {
+			if(tipo.equalsIgnoreCase("Onibus")) {
+				dtmFuncionarios.addColumn("Placa");
+				dtmFuncionarios.addColumn("Motorista");
+				dtmFuncionarios.addColumn("Cobrador");
+				dtmFuncionarios.addColumn("Fiscal");
+
+				dtmFuncionarios.addRow(new String[] {"Placa", "Motorista", "Cobrador", "Fiscal"});
 				
-				StringBuffer idade = new StringBuffer();
-				StringBuffer salario = new StringBuffer();
-				idade.append(cobrador_.get(i).getIdade());
-				salario.append(cobrador_.get(i).ajuste_salario());
-				String auxiliar = idade.toString();
-				String auxiliar2 = salario.toString();
-				dtmFuncionarios.addRow(new String[] {cobrador_.get(i).getNome(), cobrador_.get(i).getCpf(), auxiliar, "S/CNH", cobrador_.get(i).getTelefone(), auxiliar2, cobrador_.get(i).getCargo()});
+				Onibusdao dao = new Onibusdao();
+				dao.read();
 				
+				for(int i = 0; i < onibus_.size(); i++) {
+					dtmFuncionarios.addRow(new String[] {onibus_.get(i).getPlaca(), onibus_.get(i).getMotorista(), onibus_.get(i).getCobrador(), onibus_.get(i).getFiscal()});
+				}
+				
+				table.setModel(dtmFuncionarios);
 			}
 			
-		}
-		if(fiscal_.isEmpty() == false) {
-			for(int i = 0; i < fiscal_.size(); i++) {
+			if(tipo.equalsIgnoreCase("Rotas")) {
 				
-				StringBuffer idade = new StringBuffer();
-				StringBuffer salario = new StringBuffer();
-				idade.append(fiscal_.get(i).getIdade());
-				salario.append(fiscal_.get(i).ajuste_salario());
-				String auxiliar = idade.toString();
-				String auxiliar2 = salario.toString();
-				dtmFuncionarios.addRow(new String[] {fiscal_.get(i).getNome(), fiscal_.get(i).getCpf(), auxiliar, "S/CNH", fiscal_.get(i).getTelefone(), auxiliar2, fiscal_.get(i).getCargo()});
+				dtmFuncionarios.addColumn("ID_Rota");
+				dtmFuncionarios.addColumn("Origem");
+				dtmFuncionarios.addColumn("Destino");
+				dtmFuncionarios.addColumn("Onibus");
+
+				dtmFuncionarios.addRow(new String[] {"ID_Rota", "Origem", "Destino", "Onibus"});
 				
+				Rotasdao dao = new Rotasdao();
+				dao.read();
+				
+				for(int i = 0; i < rotas_.size(); i++) {
+					
+					StringBuffer id_rota = new StringBuffer();
+					
+					id_rota.append(rotas_.get(i).getId_rota() );
+					String auxiliar = id_rota.toString();
+					
+					dtmFuncionarios.addRow(new String[] {auxiliar, rotas_.get(i).getOrigem() , rotas_.get(i).getDestino() , rotas_.get(i).getOnibus()});
+				}
+				
+				table.setModel(dtmFuncionarios);
 			}
 			
-		}
-		
-		table.setModel(dtmFuncionarios);
+		}	
 		
 	}
 	
@@ -325,6 +386,7 @@ public class TelaPrincipal {
 	private void initialize() {
 		
 		EmpresaDeOnibus = new JFrame();
+		EmpresaDeOnibus.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\images\\journey_120px.png"));
 		EmpresaDeOnibus.getContentPane().setBackground(Color.WHITE);
 		EmpresaDeOnibus.setTitle("Empresa de Onibus");
 		EmpresaDeOnibus.setBounds(100, 100, 1041, 620);
@@ -346,13 +408,18 @@ public class TelaPrincipal {
 		JLabel lbl_NomeEmpresa = new JLabel("Avia\u00E7\u00E3o Batista");
 		lbl_NomeEmpresa.setForeground(Color.WHITE);
 		lbl_NomeEmpresa.setFont(new Font("Arial", Font.PLAIN, 20));
-		lbl_NomeEmpresa.setBounds(119, 11, 159, 98);
+		lbl_NomeEmpresa.setBounds(113, 48, 159, 98);
 		EmpresaDeOnibus.getContentPane().add(lbl_NomeEmpresa);
 		
 		JLabel Logo = new JLabel("");
 		Logo.setIcon(new ImageIcon("src\\images\\journey_48px.png"));
-		Logo.setBounds(54, 24, 55, 69);
+		Logo.setBounds(48, 56, 55, 69);
 		EmpresaDeOnibus.getContentPane().add(Logo);
+		
+		JLabel lblNewLabel_7 = new JLabel("___________________________________");
+		lblNewLabel_7.setForeground(Color.WHITE);
+		lblNewLabel_7.setBounds(30, 125, 264, 14);
+		EmpresaDeOnibus.getContentPane().add(lblNewLabel_7);
 		
 		lbl_minimizar.setBounds(992, 0, 25, 25);
 		EmpresaDeOnibus.getContentPane().add(lbl_minimizar);
@@ -386,18 +453,18 @@ public class TelaPrincipal {
 		panel_home.setLayout(null);
 		central_Pane.addTab("", null, panel_home, null);
 		
-		JLabel lbl_logo = new JLabel("");
-		lbl_logo.setIcon(new ImageIcon("src\\images\\journey_120px.png"));
-		lbl_logo.setForeground(new Color(55, 33, 89));
-		lbl_logo.setFont(new Font("Arial", Font.PLAIN, 31));
-		lbl_logo.setBounds(301, 116, 147, 120);
-		panel_home.add(lbl_logo);
+		JLabel lbl_logo_1_1 = new JLabel("");
+		lbl_logo_1_1.setIcon(new ImageIcon("src\\images\\journey_120px.png"));
+		lbl_logo_1_1.setForeground(new Color(55, 33, 89));
+		lbl_logo_1_1.setFont(new Font("Arial", Font.PLAIN, 31));
+		lbl_logo_1_1.setBounds(309, 117, 147, 120);
+		panel_home.add(lbl_logo_1_1);
 		
-		JLabel lblAviaoBatista = new JLabel("Avia\u00E7\u00E3o Batista");
-		lblAviaoBatista.setFont(new Font("Arial", Font.PLAIN, 31));
-		lblAviaoBatista.setForeground(new Color(55, 33, 89));
-		lblAviaoBatista.setBounds(257, 243, 251, 60);
-		panel_home.add(lblAviaoBatista);
+		JLabel lblAviaoBatista_1_1 = new JLabel("Avia\u00E7\u00E3o Batista");
+		lblAviaoBatista_1_1.setForeground(new Color(55, 33, 89));
+		lblAviaoBatista_1_1.setFont(new Font("Arial", Font.PLAIN, 31));
+		lblAviaoBatista_1_1.setBounds(258, 248, 251, 60);
+		panel_home.add(lblAviaoBatista_1_1);
 		
 		JPanel panel_contratar = new JPanel();
 		panel_contratar.setLayout(null);
@@ -591,7 +658,7 @@ public class TelaPrincipal {
 						int idade = Integer.parseInt(text_idade.getText());
 						String cargoo = "Cobrador";
 						
-						Cobrador cobrador = new Cobrador(text_name.getText(),text_cpf.getText(), idade,text_telefone.getText(), salario_minimo, cargoo);
+						Cobrador cobrador = new Cobrador(text_name.getText(),text_cpf.getText(), idade,text_telefone.getText(), (float) salario_minimo, cargoo);
 						
 						
 						Cobradordao dao = new Cobradordao();
@@ -602,7 +669,7 @@ public class TelaPrincipal {
 						c.setCpf(cobrador.getCpf());
 						c.setIdade(cobrador.getIdade());
 						c.setTelefone(cobrador.getTelefone());
-						c.setSalario(cobrador.getSalario());
+						c.setSalario((float) cobrador.getSalario());
 						c.setCargo(cobrador.getCargo());
 						dao.create(c);
 						
@@ -616,7 +683,7 @@ public class TelaPrincipal {
 					if(cargo.equalsIgnoreCase("Fiscal")) {
 						int idade = Integer.parseInt(text_idade.getText());
 						String cargoo = "Fiscal";
-						Fiscal fiscal = new Fiscal(text_name.getText(),text_cpf.getText(), idade,text_telefone.getText(), salario_minimo, cargoo);
+						Fiscal fiscal = new Fiscal(text_name.getText(),text_cpf.getText(), idade,text_telefone.getText(), (float) salario_minimo, cargoo);
 	
 						
 						Fiscaldao dao = new Fiscaldao();
@@ -627,7 +694,7 @@ public class TelaPrincipal {
 						f.setCpf(fiscal.getCpf());
 						f.setIdade(fiscal.getIdade());
 						f.setTelefone(fiscal.getTelefone());
-						f.setSalario(fiscal.getSalario());
+						f.setSalario((float) fiscal.getSalario());
 						f.setCargo(fiscal.getCargo());
 						dao.create(f);
 						
@@ -840,10 +907,12 @@ public class TelaPrincipal {
 							
 							auxiliar2 = textplaca.getText();
 							auxiliar4 = textid.getText();
+							
 							for(int i = 0; i < onibus_.size(); i++) {
 								if(auxiliar2.equalsIgnoreCase(onibus_.get(i).getPlaca())) {
 									
 									for(int j = 0; j < motorista_.size();j++) {
+										
 										if(auxiliar4.equalsIgnoreCase(motorista_.get(j).getId_motorista())) {
 											onibus_.get(i).setMotorista(auxiliar4);
 											
@@ -853,6 +922,8 @@ public class TelaPrincipal {
 											o.setCobrador(onibus_.get(i).getCobrador());
 											o.setFiscal(onibus_.get(i).getFiscal());
 											daoooo.update(o);
+											
+											
 											
 										}
 									}
@@ -888,7 +959,9 @@ public class TelaPrincipal {
 							textid.setText("");
 							textplaca.setText("");
 						}else {
+							
 							auxiliar3 = Integer.parseInt(textid.getText());
+							
 							for(int i = 0; i < rotas_.size(); i++) {
 								int aux = rotas_.get(i).getId_rota();
 								if(auxiliar3 == aux) {
@@ -1082,17 +1155,16 @@ public class TelaPrincipal {
 				lbl_d.setVisible(false);
 				lbl_id.setVisible(false);
 				
-				
-				
-				
 				if(auxiliar.equalsIgnoreCase(text_destino.getText())) {
 					lbl_d.setVisible(true);
-					if(auxiliar.equalsIgnoreCase(text_origem.getText())) {
+					
+				}
+				if(auxiliar.equalsIgnoreCase(text_origem.getText())) {
 						lbl_o.setVisible(true);
-						if(auxiliar.equalsIgnoreCase(text_id.getText())) {
+				}
+				
+				if(auxiliar.equalsIgnoreCase(text_id.getText())) {
 							lbl_id.setVisible(true);
-						}
-					}
 				}
 				
 				if(auxiliar.equalsIgnoreCase(text_destino.getText()) == false) {
@@ -1123,8 +1195,6 @@ public class TelaPrincipal {
 				
 			}
 		});
-		
-		
 		
 		JPanel panel_add_bus = new JPanel();
 		panel_add_bus.setBackground(Color.WHITE);
@@ -1178,10 +1248,10 @@ public class TelaPrincipal {
 		button_cad.setBounds(316, 307, 104, 23);
 		panel_add_bus.add(button_cad);
 		
-		JPanel panel_funcionarios = new JPanel();
-		panel_funcionarios.setLayout(null);
-		panel_funcionarios.setBackground(Color.WHITE);
-		central_Pane.addTab("New tab", null, panel_funcionarios, null);
+		JPanel panel_relatorio = new JPanel();
+		panel_relatorio.setLayout(null);
+		panel_relatorio.setBackground(Color.WHITE);
+		central_Pane.addTab("New tab", null, panel_relatorio, null);
 		
 		table = new JTable();
 		table.setModel(new DefaultTableModel(
@@ -1199,11 +1269,31 @@ public class TelaPrincipal {
 		table.getColumnModel().getColumn(5).setPreferredWidth(63);
 		table.getColumnModel().getColumn(6).setPreferredWidth(43);
 		table.setSize(new Dimension(600, 800));
-		table.setBounds(0, 0, 724, 420);
+		table.setBounds(0, 22, 724, 398);
 		table.setLayout(null);
 		table.setVisible(true);
-		panel_funcionarios.add(table);
+		panel_relatorio.add(table);
 		
+		JComboBox comboBox_1 = new JComboBox();
+		comboBox_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+				String auxiliar = (String) comboBox_1.getSelectedItem();
+				if(auxiliar.equalsIgnoreCase("")) {
+					carregarTable(auxiliar);
+				}else {
+					carregarTable(auxiliar);
+				}
+			}
+		});
+		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"", "Funcionarios", "Onibus", "Rotas"}));
+		comboBox_1.setBounds(609, 0, 115, 22);
+		panel_relatorio.add(comboBox_1);
+		
+		JPanel panel = new JPanel();
+		panel.setBounds(-3, 0, 615, 22);
+		panel_relatorio.add(panel);
+		panel.setBackground(new Color(57,40,92));
 		
 		JPanel panel_demissao = new JPanel();
 		panel_demissao.setLayout(null);
@@ -1384,7 +1474,7 @@ public class TelaPrincipal {
 			}
 		});
 		
-		panel_1.setBounds(0, 120, 312, 63);
+		panel_1.setBounds(0, 185, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_1);
 		panel_1.setBackground(new Color(57, 40, 92));
 		panel_1.setLayout(null);
@@ -1401,8 +1491,27 @@ public class TelaPrincipal {
 		lblhome.setBounds(79, 11, 59, 41);
 		panel_1.add(lblhome);
 		
+		JPanel panel_5 = new JPanel();
+		panel_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseEntered(MouseEvent e) {
+				panel_5.setBackground(new Color(85, 65, 118));
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
+				panel_5.setBackground(new Color(57, 40, 92));
+			}
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				central_Pane.removeAll();
+				central_Pane.add(panel_rotas);
+				central_Pane.repaint();
+				central_Pane.revalidate();
+			}
+		});
+		
 		panel_2 = new JPanel();
-		panel_2.setBounds(0, 182, 312, 63);
+		panel_2.setBounds(0, 248, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -1423,9 +1532,6 @@ public class TelaPrincipal {
 				central_Pane.revalidate();
 			}
 		});
-		
-		panel_2.setBounds(0, 182, 312, 63);
-		EmpresaDeOnibus.getContentPane().add(panel_2);
 		panel_2.setBackground(new Color(57, 40, 92));
 		
 		JLabel lbl_folder = new JLabel("");
@@ -1440,7 +1546,7 @@ public class TelaPrincipal {
 		panel_2.add(lblContratar);
 		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(0, 244, 312, 63);
+		panel_3.setBounds(0, 310, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -1461,9 +1567,6 @@ public class TelaPrincipal {
 				central_Pane.revalidate();
 			}
 		});
-		
-		panel_3.setBounds(0, 244, 312, 63);
-		EmpresaDeOnibus.getContentPane().add(panel_3);
 		panel_3.setBackground(new Color(57, 40, 92));
 		
 		JLabel lbl_folder_1 = new JLabel("");
@@ -1478,10 +1581,9 @@ public class TelaPrincipal {
 		panel_3.add(lblOrganizao);
 		
 		JPanel panel_4 = new JPanel();
-		panel_4.setLayout(null);
-		panel_4.setBackground(new Color(57, 40, 92));
-		panel_4.setBounds(0, 305, 312, 63);
+		panel_4.setBounds(0, 373, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_4);
+		panel_4.setBackground(new Color(57, 40, 92));
 		panel_4.setLayout(null);
 		
 		panel_4.addMouseListener(new MouseAdapter() {
@@ -1501,44 +1603,23 @@ public class TelaPrincipal {
 				central_Pane.revalidate();
 			}
 		});
-		
-		panel_4.setBounds(0, 305, 312, 63);
-		EmpresaDeOnibus.getContentPane().add(panel_4);
 		panel_4.setBackground(new Color(57, 40, 92));
+		panel_4.setLayout(null);
 		
 		
-		JLabel lbl_relatorio = new JLabel("");
-		lbl_relatorio.setIcon(new ImageIcon("src\\images\\tour_bus_18px.png"));
-		lbl_relatorio.setBounds(29, 0, 18, 63);
-		panel_4.add(lbl_relatorio);
+		JLabel lbl_cadastrar = new JLabel("");
+		lbl_cadastrar.setBounds(29, 0, 18, 63);
+		lbl_cadastrar.setIcon(new ImageIcon("src\\images\\bus_18px.png"));
+		panel_4.add(lbl_cadastrar);
 		
-		JLabel lbl_folha = new JLabel("Cadastrar \u00D4nibus");
-		lbl_folha.setForeground(Color.WHITE);
-		lbl_folha.setFont(new Font("Arial", Font.PLAIN, 17));
-		lbl_folha.setBounds(79, 11, 152, 41);
-		panel_4.add(lbl_folha);
-		
-		JPanel panel_5 = new JPanel();
-		panel_5.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				panel_5.setBackground(new Color(85, 65, 118));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				panel_5.setBackground(new Color(57, 40, 92));
-			}
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				central_Pane.removeAll();
-				central_Pane.add(panel_rotas);
-				central_Pane.repaint();
-				central_Pane.revalidate();
-			}
-		});
+		JLabel lblcadastrar = new JLabel("Cadastrar \u00D4nibus");
+		lblcadastrar.setBounds(79, 11, 152, 41);
+		lblcadastrar.setForeground(Color.WHITE);
+		lblcadastrar.setFont(new Font("Arial", Font.PLAIN, 17));
+		panel_4.add(lblcadastrar);
 		panel_5.setLayout(null);
 		panel_5.setBackground(new Color(57, 40, 92));
-		panel_5.setBounds(0, 366, 312, 63);
+		panel_5.setBounds(0, 435, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_5);
 		
 		JLabel lbl_bus = new JLabel("");
@@ -1564,30 +1645,32 @@ public class TelaPrincipal {
 			}
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				String auxiliar = (String) comboBox_1.getSelectedItem();
+					
+				carregarTable(auxiliar);
 				
-				carregarTable();
 				
 				central_Pane.removeAll();
-				central_Pane.add(panel_funcionarios);
+				central_Pane.add(panel_relatorio);
 				central_Pane.repaint();
 				central_Pane.revalidate();
 			}
 		});
 		panel_6.setLayout(null);
 		panel_6.setBackground(new Color(57, 40, 92));
-		panel_6.setBounds(0, 429, 312, 63);
+		panel_6.setBounds(0, 497, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_6);
 		
-		JLabel lbl_funcionario = new JLabel("");
-		lbl_funcionario.setIcon(new ImageIcon("src\\images\\folder_18px.png"));
-		lbl_funcionario.setBounds(29, 11, 23, 41);
-		panel_6.add(lbl_funcionario);
+		JLabel lbl_relatorio = new JLabel("");
+		lbl_relatorio.setIcon(new ImageIcon("src\\images\\file_invoice_18px.png"));
+		lbl_relatorio.setBounds(29, 11, 23, 41);
+		panel_6.add(lbl_relatorio);
 		
-		JLabel lblfuncionario = new JLabel("Funcion\u00E1rios");
-		lblfuncionario.setForeground(Color.WHITE);
-		lblfuncionario.setFont(new Font("Arial", Font.PLAIN, 17));
-		lblfuncionario.setBounds(79, 11, 100, 41);
-		panel_6.add(lblfuncionario);
+		JLabel lblrelatorio = new JLabel("Relat\u00F3rio");
+		lblrelatorio.setForeground(Color.WHITE);
+		lblrelatorio.setFont(new Font("Arial", Font.PLAIN, 17));
+		lblrelatorio.setBounds(79, 11, 100, 41);
+		panel_6.add(lblrelatorio);
 		
 		JPanel panel_7 = new JPanel();
 		panel_7.addMouseListener(new MouseAdapter() {
@@ -1608,7 +1691,7 @@ public class TelaPrincipal {
 				central_Pane.revalidate();
 			}
 		});
-		panel_7.setBounds(0, 492, 312, 63);
+		panel_7.setBounds(0, 558, 312, 63);
 		EmpresaDeOnibus.getContentPane().add(panel_7);
 		panel_7.setLayout(null);
 		panel_7.setBackground(new Color(57, 40, 92));
@@ -1618,7 +1701,7 @@ public class TelaPrincipal {
 		lbl_demitir.setBounds(30, 11, 23, 41);
 		panel_7.add(lbl_demitir);
 		
-		JLabel lbldemitir = new JLabel("Demitir");
+		JLabel lbldemitir = new JLabel("Demiss\u00E3o");
 		lbldemitir.setForeground(Color.WHITE);
 		lbldemitir.setFont(new Font("Arial", Font.PLAIN, 17));
 		lbldemitir.setBounds(79, 11, 100, 41);

@@ -20,4 +20,8 @@ public class Fiscal extends Funcionarios{
 	public void setId_fiscal(String id_fiscal) {
 		this.id_fiscal = id_fiscal;
 	}
+	
+	public void reajuste_salario() {
+		this.salario = (float) (this.salario - 1.000);
+	}
 }

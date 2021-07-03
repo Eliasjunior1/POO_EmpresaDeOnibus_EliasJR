@@ -42,7 +42,7 @@ public class Rotasdao {
 		ResultSet rs = null;
 		
 		try {
-			stmt = con.prepareStatement("SELECT * FROM motorista");
+			stmt = con.prepareStatement("SELECT * FROM rota");
 			rs = stmt.executeQuery();
 			
 			

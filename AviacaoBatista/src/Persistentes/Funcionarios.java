@@ -45,6 +45,10 @@ public abstract class Funcionarios {
 		
 	}
 	
+	public void reajuste_salario() {
+
+	}
+	
 	public String getNome() {
 		return nome;
 	}
@@ -77,6 +81,7 @@ public abstract class Funcionarios {
 	public void setCargo(String cargo) {
 		this.cargo = cargo;
 	}
+	
 	public String id() {
 		int i;
 		char[] letras = "ABCDEFGHIJKLMNOPQRSTUVXYZ".toCharArray();
