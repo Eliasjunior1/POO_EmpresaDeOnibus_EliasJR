@@ -11,7 +11,7 @@ import javax.swing.ImageIcon;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
-import java.util.Vector;
+
 
 import javax.swing.JPanel;
 
@@ -25,7 +25,6 @@ import javax.swing.SwingConstants;
 
 import Persistentes.Cobrador;
 import Persistentes.Fiscal;
-import Persistentes.Gerente;
 import Persistentes.Motorista;
 import Persistentes.Onibus;
 import Persistentes.Rotas;
@@ -43,18 +42,16 @@ import model.dao.Rotasdao;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JFormattedTextField;
+
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.ListSelectionModel;
 import java.awt.Dimension;
-import javax.swing.border.EmptyBorder;
-import java.awt.Component;
+
+
+
 import javax.swing.AbstractListModel;
-import javax.swing.JSplitPane;
-import javax.swing.JLayeredPane;
-import javax.swing.JSeparator;
+
 import java.awt.Toolkit;
 
 public class TelaPrincipal {
@@ -82,11 +79,11 @@ public class TelaPrincipal {
 	private JTextField text_destino;
 	private JTextField text_id;
 	private JTextField text_id_demissao;
-	private JPanel panelRotas;
 	private JTextField textid;
 	private JTextField textplaca;
 	
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" }) //Não sei o que isso faz mas quando acrescento ao código os alertas de atenção somem!
 	public void carregarLista_demissao(JList lista_id, JList lista_nome, String cargo) {
 		
 		DefaultListModel modelo_id = new DefaultListModel();
@@ -99,6 +96,7 @@ public class TelaPrincipal {
 		daoo.read();
 		Fiscaldao daooo = new Fiscaldao();
 		daooo.read();
+		
 		
 		if(cargo.equalsIgnoreCase("Motorista")) {
 			if(motorista_.isEmpty()) {
@@ -148,6 +146,7 @@ public class TelaPrincipal {
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void carregarLista_orgRota(JList lista_id, JList lista_onibus) {
 		DefaultListModel modelo_id = new DefaultListModel();
 		
@@ -186,6 +185,7 @@ public class TelaPrincipal {
 		
 	}
 	
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void carregarLista_orgFunci(JList lista_id, JList lista_nome, JList lista_cargo, JList lista_onibus) {
 		
 		DefaultListModel modelo_id = new DefaultListModel();
@@ -242,7 +242,7 @@ public class TelaPrincipal {
 	public void carregarTable(String tipo) {
 		
 		DefaultTableModel dtmFuncionarios = new DefaultTableModel();
-		
+				
 		if(tipo.equalsIgnoreCase("")) {
 			table.setModel(dtmFuncionarios);
 			
@@ -257,7 +257,6 @@ public class TelaPrincipal {
 				dtmFuncionarios.addColumn("Salário");
 				dtmFuncionarios.addColumn("Cargo");
 				dtmFuncionarios.addRow(new String[] {"Nome", "CPF", "Idade", "CNH", "Telefone", "Salário","Cargo"});
-				
 				
 				Motoristadao dao = new Motoristadao();
 				dao.read();
@@ -362,7 +361,16 @@ public class TelaPrincipal {
 				table.setModel(dtmFuncionarios);
 			}
 			
-		}	
+		}
+	
+		
+		
+		table.setEnabled(false);
+		
+		//table.setFont(table.getFont().deriveFont(Font.BOLD));
+		
+	
+		
 		
 	}
 	
@@ -383,6 +391,7 @@ public class TelaPrincipal {
 		initialize();
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked", "serial" })
 	private void initialize() {
 		
 		EmpresaDeOnibus = new JFrame();
@@ -1259,8 +1268,8 @@ public class TelaPrincipal {
 			},
 			new String[] {
 				"nome", "cpf", "idade", "cnh", "telefone", "salario","cargo",
-			}
-		));
+		
+			}));
 		table.getColumnModel().getColumn(0).setPreferredWidth(141);
 		table.getColumnModel().getColumn(1).setPreferredWidth(93);
 		table.getColumnModel().getColumn(2).setPreferredWidth(39);

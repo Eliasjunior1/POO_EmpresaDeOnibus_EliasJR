@@ -18,6 +18,8 @@ import javax.swing.JTextField;
 import Persistentes.Gerente;
 import model.dao.Gerentedao;
 import java.awt.Toolkit;
+import javax.swing.border.LineBorder;
+import javax.swing.border.MatteBorder;
 
 public class Login {
 	
@@ -51,23 +53,38 @@ public class Login {
 
 	private void initialize() {
 		EmpresaDeOnibus = new JFrame();
+		EmpresaDeOnibus.getContentPane().setBackground(new Color(55, 33, 89));
 		EmpresaDeOnibus.setIconImage(Toolkit.getDefaultToolkit().getImage("src\\images\\journey_120px.png"));
 		EmpresaDeOnibus.setBounds(new Rectangle(0, 0, 300, 400));
+	
 	
 		EmpresaDeOnibus.setBounds(100, 100, 300, 400);
 		EmpresaDeOnibus.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		EmpresaDeOnibus.getContentPane().setLayout(null);
 		EmpresaDeOnibus.setResizable(false);
 		EmpresaDeOnibus.setLocationRelativeTo(null);
-		EmpresaDeOnibus.setUndecorated(false);
+		EmpresaDeOnibus.setUndecorated(true);
 		
 		Gerentedao dao = new Gerentedao();
 		
+		JLabel lblclose_1 = new JLabel("");
+		lblclose_1.setIcon(new ImageIcon("src\\images\\male_user_92px.png"));
+		lblclose_1.setBounds(104, 26, 97, 92);
+		EmpresaDeOnibus.getContentPane().add(lblclose_1);
+		
+		
+		JLabel lbl_erro = new JLabel("");
+		lbl_erro.setFont(new Font("Constantia", Font.PLAIN, 14));
+		lbl_erro.setForeground(Color.RED);
+		lbl_erro.setBounds(48, 271, 208, 20);
+		EmpresaDeOnibus.getContentPane().add(lbl_erro);
+		
 		
 		JLabel lblclose = new JLabel("");
+		lblclose.setIcon(new ImageIcon("src\\images\\close_window_32px.png"));
 		lblclose.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		
-		lblclose.setBounds(276, 0, 24, 24);
+		lblclose.setBounds(273, 0, 28, 24);
 		EmpresaDeOnibus.getContentPane().add(lblclose);
 		
 		lblclose.addMouseListener(new MouseAdapter() {
@@ -77,35 +94,43 @@ public class Login {
 			}
 		});
 		
-		passwordField = new JPasswordField();
-		passwordField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
-		passwordField.setBorder(null);
-		passwordField.setOpaque(false);
-		passwordField.setFont(new Font("Constantia", Font.PLAIN, 14));
-		passwordField.setForeground(Color.WHITE);
-		passwordField.setBounds(48, 216, 208, 20);
-		EmpresaDeOnibus.getContentPane().add(passwordField);
-		
 		text_user = new JTextField();
-		text_user.setBorder(null);
+		text_user.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(255, 255, 255)));
 		text_user.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
 		text_user.setOpaque(false);
 		text_user.setForeground(Color.WHITE);
 		
-		text_user.setFont(new Font("Constantia", Font.PLAIN, 14));
-		text_user.setBounds(48, 136, 208, 20);
+		text_user.setFont(new Font("Arial", Font.PLAIN, 14));
+		text_user.setBounds(48, 185, 208, 20);
 		EmpresaDeOnibus.getContentPane().add(text_user);
 		text_user.setColumns(10);
 		
+		passwordField = new JPasswordField();
+		passwordField.setCursor(Cursor.getPredefinedCursor(Cursor.TEXT_CURSOR));
+		passwordField.setBorder(new MatteBorder(0, 0, 3, 0, (Color) new Color(255, 255, 255)));
+		passwordField.setOpaque(false);
+		passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
+		passwordField.setForeground(Color.WHITE);
+		passwordField.setBounds(48, 249, 208, 20);
+		EmpresaDeOnibus.getContentPane().add(passwordField);
 		
-		JLabel lbl_erro = new JLabel("");
-		lbl_erro.setFont(new Font("Constantia", Font.PLAIN, 14));
-		lbl_erro.setForeground(Color.RED);
-		lbl_erro.setBounds(48, 235, 208, 20);
-		EmpresaDeOnibus.getContentPane().add(lbl_erro);
+		JLabel lbl_nome = new JLabel("Nome");
+		lbl_nome.setFont(new Font("Arial", Font.BOLD, 13));
+		lbl_nome.setForeground(Color.WHITE);
+		lbl_nome.setBounds(48, 160, 46, 14);
+		EmpresaDeOnibus.getContentPane().add(lbl_nome);
+		
+		JLabel lbl_nome_1 = new JLabel("Senha");
+		lbl_nome_1.setForeground(Color.WHITE);
+		lbl_nome_1.setFont(new Font("Arial", Font.BOLD, 13));
+		lbl_nome_1.setBounds(48, 228, 46, 14);
+		EmpresaDeOnibus.getContentPane().add(lbl_nome_1);
 		
 		
-		JLabel lbl_entrar = new JLabel("");
+		JLabel lbl_entrar = new JLabel("      Entrar");
+		lbl_entrar.setBorder(new LineBorder(new Color(255, 255, 255), 2));
+		lbl_entrar.setFont(new Font("Arial", Font.BOLD, 14));
+		lbl_entrar.setForeground(Color.WHITE);
 		lbl_entrar.addMouseListener(new MouseAdapter() {
 			@SuppressWarnings("deprecation")
 			@Override
@@ -140,15 +165,9 @@ public class Login {
 			}
 		});
 		
-		lbl_entrar.setBounds(100, 277, 104, 39);
+		lbl_entrar.setBounds(104, 325, 97, 35);
 		lbl_entrar.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
 		EmpresaDeOnibus.getContentPane().add(lbl_entrar);
-		
-		
-		JLabel lbl_model = new JLabel("");
-		lbl_model.setIcon(new ImageIcon("src\\images\\LOGIN.jpg"));
-		lbl_model.setBounds(0, 0, 300, 400);
-		EmpresaDeOnibus.getContentPane().add(lbl_model);
 		
 		
 		
