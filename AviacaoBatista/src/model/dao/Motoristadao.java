@@ -43,6 +43,7 @@ public class Motoristadao {
 		PreparedStatement stmt = null;
 		
 		ResultSet rs = null;
+				
 		
 		try {
 			stmt = con.prepareStatement("SELECT * FROM motorista");

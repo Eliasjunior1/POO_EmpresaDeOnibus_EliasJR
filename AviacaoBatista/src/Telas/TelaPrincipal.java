@@ -46,13 +46,13 @@ import java.awt.event.ActionEvent;
 import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import java.awt.Dimension;
 
 
 
 import javax.swing.AbstractListModel;
 
 import java.awt.Toolkit;
+import javax.swing.JScrollPane;
 
 public class TelaPrincipal {
 	
@@ -241,6 +241,7 @@ public class TelaPrincipal {
 	
 	public void carregarTable(String tipo) {
 		
+		
 		DefaultTableModel dtmFuncionarios = new DefaultTableModel();
 				
 		if(tipo.equalsIgnoreCase("")) {
@@ -249,6 +250,15 @@ public class TelaPrincipal {
 		}else {
 			if(tipo.equalsIgnoreCase("Funcionarios")) {
 				
+				table.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+								"Nome", "CPF", "Idade", "CNH", "Telefone", "Salário","Cargo",
+					
+						}));
+				
+				
 				dtmFuncionarios.addColumn("Nome");
 				dtmFuncionarios.addColumn("CPF");
 				dtmFuncionarios.addColumn("Idade");
@@ -256,7 +266,6 @@ public class TelaPrincipal {
 				dtmFuncionarios.addColumn("Telefone");
 				dtmFuncionarios.addColumn("Salário");
 				dtmFuncionarios.addColumn("Cargo");
-				dtmFuncionarios.addRow(new String[] {"Nome", "CPF", "Idade", "CNH", "Telefone", "Salário","Cargo"});
 				
 				Motoristadao dao = new Motoristadao();
 				dao.read();
@@ -319,12 +328,20 @@ public class TelaPrincipal {
 			}
 			
 			if(tipo.equalsIgnoreCase("Onibus")) {
+				
+				table.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+								"Placa", "Motorista", "Cobrador", "Fiscal",
+					
+						}));
+				
 				dtmFuncionarios.addColumn("Placa");
 				dtmFuncionarios.addColumn("Motorista");
 				dtmFuncionarios.addColumn("Cobrador");
 				dtmFuncionarios.addColumn("Fiscal");
 
-				dtmFuncionarios.addRow(new String[] {"Placa", "Motorista", "Cobrador", "Fiscal"});
 				
 				Onibusdao dao = new Onibusdao();
 				dao.read();
@@ -338,12 +355,18 @@ public class TelaPrincipal {
 			
 			if(tipo.equalsIgnoreCase("Rotas")) {
 				
+				table.setModel(new DefaultTableModel(
+						new Object[][] {
+						},
+						new String[] {
+								"ID_Rota", "Origem", "Destino", "Onibus",
+					
+						}));
+				
 				dtmFuncionarios.addColumn("ID_Rota");
 				dtmFuncionarios.addColumn("Origem");
 				dtmFuncionarios.addColumn("Destino");
 				dtmFuncionarios.addColumn("Onibus");
-
-				dtmFuncionarios.addRow(new String[] {"ID_Rota", "Origem", "Destino", "Onibus"});
 				
 				Rotasdao dao = new Rotasdao();
 				dao.read();
@@ -361,17 +384,8 @@ public class TelaPrincipal {
 				table.setModel(dtmFuncionarios);
 			}
 			
-		}
-	
-		
-		
+		}		
 		table.setEnabled(false);
-		
-		//table.setFont(table.getFont().deriveFont(Font.BOLD));
-		
-	
-		
-		
 	}
 	
 	public static void main(String[] args) {
@@ -1262,26 +1276,22 @@ public class TelaPrincipal {
 		panel_relatorio.setBackground(Color.WHITE);
 		central_Pane.addTab("New tab", null, panel_relatorio, null);
 		
+		JScrollPane scrollPane = new JScrollPane();
+		scrollPane.setFont(new Font("Tahoma", Font.BOLD, 11));
+		scrollPane.setBounds(0, 22, 724, 398);
+		panel_relatorio.add(scrollPane);
+		
 		table = new JTable();
+		scrollPane.setViewportView(table);
+		
 		table.setModel(new DefaultTableModel(
 			new Object[][] {
 			},
 			new String[] {
-				"nome", "cpf", "idade", "cnh", "telefone", "salario","cargo",
-		
-			}));
-		table.getColumnModel().getColumn(0).setPreferredWidth(141);
-		table.getColumnModel().getColumn(1).setPreferredWidth(93);
-		table.getColumnModel().getColumn(2).setPreferredWidth(39);
-		table.getColumnModel().getColumn(3).setPreferredWidth(88);
-		table.getColumnModel().getColumn(4).setPreferredWidth(90);
-		table.getColumnModel().getColumn(5).setPreferredWidth(63);
-		table.getColumnModel().getColumn(6).setPreferredWidth(43);
-		table.setSize(new Dimension(600, 800));
-		table.setBounds(0, 22, 724, 398);
+			}
+		));
 		table.setLayout(null);
 		table.setVisible(true);
-		panel_relatorio.add(table);
 		
 		JComboBox comboBox_1 = new JComboBox();
 		comboBox_1.addActionListener(new ActionListener() {
